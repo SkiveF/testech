@@ -1,3 +1,9 @@
+import logging
+
+# Set up the logger
+logging.basicConfig(level=logging.INFO)
+
+
 def compute_price_total(basket):
     """cette fonction permet d'appliquer les réductions de 10% et 20% que
     voudrait mettre en place l'équipe de production de Back to the future sur
@@ -8,7 +14,7 @@ def compute_price_total(basket):
         int: elle retourne le prix des films de la saga Back to the
         futur et les autres achetés s'il y en a
     """
-    dvd_price = 15  # prix des dvd back to
+    dvd_price = 15
     price_other_film = 20
     
     films_back_to_the_future = [film for film in basket if
@@ -41,4 +47,4 @@ if __name__ == '__main__':
     ]
     total_price_films = compute_price_total(basket)
     
-    print("Prix total du panier :", total_price_films)
+    logging.info("Prix total du panier : %d" % total_price_films)
