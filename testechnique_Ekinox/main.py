@@ -3,7 +3,9 @@ import logging
 # Set up the logger
 logging.basicConfig(level=logging.INFO)
 
+
 def compute_dvd_price(num_dvd):
+    """calcule prix d'un dvd"""
     dvd_price = 15
     return dvd_price * num_dvd
 
@@ -11,6 +13,7 @@ def compute_dvd_price(num_dvd):
 def compute_other_films_price(number_other_films):
     price_other_film = 20
     return price_other_film * number_other_films
+
 
 def compute_price_total(basket):
     """cette fonction permet d'appliquer les réductions de 10% et 20% que
@@ -22,7 +25,6 @@ def compute_price_total(basket):
         int: elle retourne le prix des films de la saga Back to the
         futur et les autres achetés s'il y en a
     """
-
     
     films_back_to_the_future = [film for film in basket if
                                 film.startswith("Back to the Future")]
