@@ -1,39 +1,58 @@
-def auctions(bidders_data, reserve_price):
-    """this function is an auction simulation.
-       It takes two parameters: the bids and the default price.
-    """
-    # filter eligible bidder which offer is >= reserve_price.
-    eligible_bidders = [bidder for bidder, bids in bidders_data.items() if
-                        bids and max(bids) >= reserve_price]
-    
-    # if offer of eligible_bidders <= reserve_price
-    if not eligible_bidders:
-        return None, reserve_price
-    
-    # sort bidders according to their offer
-    eligible_bidders.sort(key=lambda bidder: max(bidders_data[bidder]),
-                          reverse=True)
-    winner = eligible_bidders[0]
-    winning_price = max(bidder for bidder, bids in bidders_data.items() if
-                        bidder != winner and bids and max(
-                            bids) >= reserve_price)
-    # result
-    return winner, winning_price
+class Auctions:
+    """_summary_"""
+
+    def __init__(self, bidders_data, reserve_price):
+        self.bidders_data = bidders_data
+        self.reserve_price = reserve_price
+
+    def find_eligible_bidders(self):
+        eligible_bider = [
+            bidder
+            for bidder, bids in self.bidders_data.items()
+            if bids and max(bids) >= self.reserve_price
+        ]
+        return eligible_bider
+
+    def find_not_eligible_bidder(self):
+        return None, self.reserve_price
+
+    def winner_auctions(self):
+        eligible_bidders = self.find_eligible_bidders()
+        if eligible_bidders:
+            eligible_bidders.sort(
+                key=lambda bidder: max(self.bidders_data[bidder]), reverse=True
+            )
+            winner = eligible_bidders[0]
+            return winner
+        else:
+            return None
+
+    def winning_price(self):
+        winner = self.winner_auctions()
+        if winner:
+            winning_price_ = max(
+                max(bids)
+                for bidder, bids in self.bidders_data.items()
+                if bidder != winner and bids and max(bids) >= self.reserve_price
+            )
+
+            return winning_price_
+        else:
+            return 0
 
 
-if __name__ == '__main__':
-    # usage case
+if __name__ == "__main__":
     bidders_data = {
-        'A': [110, 130],
-        'B': [],
-        'C': [125],
-        'D': [105, 115, 90],
-        'E': [132, 135, 140]
+        "A": [110, 130],
+        "B": [],
+        "C": [125],
+        "D": [105, 115, 90],
+        "E": [132, 135, 140],
     }
-    
+
     reserve_price = 100
-    
-    winner, winning_price = auctions(bidders_data, reserve_price)
-    
-    print("L'enchère gagnante est :", winner)
+    auctions = Auctions(bidders_data=bidders_data, reserve_price=reserve_price)
+    winner_x = auctions.winner_auctions()
+    winning_price = auctions.winning_price()
+    print("L'enchère gagnante est :", winner_x)
     print("Le prix de l'enchère gagnante est de:", winning_price)
